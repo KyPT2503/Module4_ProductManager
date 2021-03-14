@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+<h1>All Product</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Quantity</th>
+        <th>Category</th>
+    </tr>
+    <tr th:each="product:${products}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.date}"></td>
+        <td th:text="${product.quantity}"></td>
+        <td th:text="${product.category.name}"></td>
+        <td><a th:href="@{'/product/update/'+${product.id}}">Update</a></td>
+        <td><a th:href="@{'/product/remove/'+${product.id}}">Remove</a></td>
+    </tr>
+</table>
+<h2 th:text="'Total money: '+${total_money}+' $'"></h2>
+<a href="/category/create" target="_blank">Create new Category</a><br>
+<a href="/product/create">Create new Product</a><br>
+<h2>Search by category: </h2>
+<form action="/product/category-search" method="post">
+    <select name="id" id="id">
+        <option th:each="category:${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+    </select>
+    <input type="submit" value="Search">
+</form>
+<a th:href="@{'/product/top5newest'}">Top 5 Newest</a>
+<a th:href="@{'/product/top5much-expensive'}">Top 5 Much Expensive</a>
+</body>
+</html>
